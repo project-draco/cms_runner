@@ -26,14 +26,19 @@ public class MainProgram {
             main.initOptions();
             main.processOptions(args);
         }catch(org.apache.commons.cli.ParseException e) {
-            final PrintWriter writer = new PrintWriter(System.out);
-            HelpFormatter formatter = new HelpFormatter();
-            formatter.printUsage(writer,80,"CMS Runner", main.options);
-            writer.flush();
+            main.usageInfo();
         }
         catch(Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void usageInfo() {
+        HelpFormatter formatter = new HelpFormatter();
+        String header = "\nExecute the HeuristicDesign tool\n\n";
+        String footer = "\nPlease report issues at https://github.com/project-draco/cms_runner";
+
+        formatter.printHelp("CMSRunner", header, options, footer, true);
     }
 
     /*
