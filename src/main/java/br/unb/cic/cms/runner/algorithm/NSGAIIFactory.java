@@ -11,8 +11,8 @@ import jmetal.metaheuristics.nsgaII.NSGAII;
 
 public class NSGAIIFactory implements  AlgorithmFactory {
     @Override
-    public Algorithm instance(Project instance) throws Exception {
-        CouplingProblem problem = new CouplingProblem(instance);
+    public Algorithm instance(Project project) throws Exception {
+        CouplingProblem problem = new CouplingProblem(project);
 
         Operator crossover = new UniformCrossover();
         crossover.setParameter("probability", 1.0);
@@ -22,8 +22,8 @@ public class NSGAIIFactory implements  AlgorithmFactory {
 
         Operator selection = new BinaryTournament();
 
-        int population = 10 * instance.getPackageCount();
-        int evaluations = 200 * instance.getPackageCount() * population;
+        int population = 10 * project.getPackageCount();
+        int evaluations = 200 * project.getPackageCount() * population;
 
         NSGAII algorithm = new NSGAII(problem);
         algorithm.setInputParameter("populationSize", population);

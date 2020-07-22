@@ -6,5 +6,5 @@ import jmetal.base.Algorithm;
 import java.util.Vector;
 
 public interface AlgorithmFactory  {
-    Algorithm instance(Project instance) throws Exception;
+    Algorithm instance(Project project) throws Exception;
 }
