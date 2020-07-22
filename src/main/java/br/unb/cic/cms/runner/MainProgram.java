@@ -1,7 +1,8 @@
 package br.unb.cic.cms.runner;
 
+import br.unb.cic.cms.runner.algorithm.Algorithm;
+import br.unb.cic.cms.runner.algorithm.ClusteringProblemBuilder;
 import br.unirio.lns.hdesign.model.Project;
-import br.unirio.lns.hdesign.multiobjective.ClusteringProblemBuilder;
 import br.unirio.lns.hdesign.multiobjective.CouplingProblem;
 import br.unirio.lns.hdesign.multiobjective.Experiment;
 import br.unirio.lns.hdesign.reader.CDAFlatReader;
@@ -9,7 +10,6 @@ import br.unirio.lns.hdesign.reader.CDAFlatReader;
 import org.apache.commons.cli.*;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +18,11 @@ import java.util.stream.Collectors;
 
 public class MainProgram {
 
+    public static final String ALGORITHM = "algorithm";
+    public static final String INPUT_FILE = "input-file";
+    public static final String INPUT_DIR = "input-dir";
+    public static final String OUTPUT = "output";
+    public static final String REPETITIONS = "repetitions";
     private Options options;
 
     public static void main(String args[]) {
@@ -54,8 +59,9 @@ public class MainProgram {
                 ? Integer.parseInt(cmd.getOptionValue("repetitions"))
                 : 20;
 
+        ClusteringProblemBuilder builder = new ClusteringProblemBuilder(cmd.getOptionValue(ALGORITHM));
         Experiment<CouplingProblem, Project> experiment = new Experiment<>();
-        experiment.runCycles(cmd.getOptionValue("output"), new ClusteringProblemBuilder(), instances, repetitions);
+        experiment.runCycles(cmd.getOptionValue(OUTPUT), builder, instances, repetitions);
     }
 
     /*
@@ -76,7 +82,7 @@ public class MainProgram {
      * command line arguments.
      */
     private Vector<String> listMDGFiles(CommandLine cmd) throws Exception {
-        String path = cmd.hasOption("input-dir") ? cmd.getOptionValue("input-dir") : cmd.getOptionValue("input-file");
+        String path = cmd.hasOption(INPUT_DIR) ? cmd.getOptionValue(INPUT_DIR) : cmd.getOptionValue(INPUT_FILE);
         File file = new File(path);
 
         List<String> mdgFiles = new ArrayList<>();
@@ -99,23 +105,25 @@ public class MainProgram {
         options = new Options();
 
         options.addOption(Option.builder()
-                .longOpt("algorithm")
-                .argName("algorithm")
-                .desc("The algorithm that should be used. Default NSGAII")
+                .longOpt(ALGORITHM)
+                .argName(ALGORITHM)
+                .desc("The algorithm that should be used. " +
+                        "The valid options are: (" + Algorithm.validOptions() +
+                        "). Default NSGAII.")
                 .argName("algorithm")
                 .hasArg()
                 .build());
 
         Option inputFile = Option.builder()
-                .longOpt("input-file")
-                .argName("input-file")
+                .longOpt(INPUT_FILE)
+                .argName(INPUT_FILE)
                 .hasArg()
                 .desc("Path to the MDG file")
                 .build();
 
         Option inputDir = Option.builder()
-                .longOpt("input-dir")
-                .argName("input-dir")
+                .longOpt(INPUT_DIR)
+                .argName(INPUT_DIR)
                 .hasArg()
                 .desc("The path to a folder with MDG files")
                 .build();
@@ -129,16 +137,16 @@ public class MainProgram {
         options.addOptionGroup(inputGroup);
 
         options.addOption(Option.builder()
-                .longOpt("output")
-                .argName("output")
+                .longOpt(OUTPUT)
+                .argName(OUTPUT)
                 .hasArg()
                 .required()
                 .desc("Output file")
                 .build());
 
         options.addOption(Option.builder()
-                .longOpt("repetitions")
-                .argName("repetitions")
+                .longOpt(REPETITIONS)
+                .argName(REPETITIONS)
                 .required()
                 .hasArg()
                 .desc("Number of repetitions")
