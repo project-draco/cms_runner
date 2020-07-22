@@ -27,7 +27,7 @@ directory.
 
 ### Execution
 
-   * Usage run `java -jar ./target/cms_runner-1.0-SNAPSHOT-jar-with-dependencies.jar --help` to see the options. It should output something like: 
+   * Usage: run `java -jar ./target/cms_runner-1.0-SNAPSHOT-jar-with-dependencies.jar --help` to see the options. It should output something like: 
    
 ```
 usage: CMSRunner [--algorithm <algorithm>] --input-dir <input-dir> |
