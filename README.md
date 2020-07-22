@@ -2,9 +2,9 @@
 
 This is a CLI for running the HeuristicDesign library. The HeuristicDesign
 library has been originally developed by Prof. Márcio Barros, and
-is is available as a [supporting material](https://www.uniriotec.br/~marcio.barros/multiobjective/)
+it is available as a [supporting material](https://www.uniriotec.br/~marcio.barros/multiobjective/)
 for the paper "Evaluating Modularization Quality as an Extra Objective in Multiobjective Software Module Clustering".
-Nothe, here we are using a maven version of this library, available
+Note, here we are using a maven version of this library, available
 in a [different repository](https://github.com/project-draco/cms)
 
 
@@ -27,7 +27,7 @@ directory.
 
 ### Execution
 
-   * Usage run `java -jar ./target/cms_runner-1.0-SNAPSHOT-jar-with-dependencies.jar --help` to see the options. It should output something like: 
+   * Usage: run `java -jar ./target/cms_runner-1.0-SNAPSHOT-jar-with-dependencies.jar --help` to see the options. It should output something like: 
    
 ```
 usage: CMSRunner [--algorithm <algorithm>] --input-dir <input-dir> |
