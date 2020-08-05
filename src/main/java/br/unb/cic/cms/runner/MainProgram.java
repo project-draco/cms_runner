@@ -2,6 +2,7 @@ package br.unb.cic.cms.runner;
 
 import br.unb.cic.cms.runner.algorithm.Algorithm;
 import br.unb.cic.cms.runner.algorithm.ClusteringProblemBuilder;
+import br.unb.cic.cms.runner.algorithm.LNS;
 import br.unirio.lns.hdesign.model.Project;
 import br.unirio.lns.hdesign.multiobjective.CouplingProblem;
 import br.unirio.lns.hdesign.multiobjective.Experiment;
@@ -53,11 +54,33 @@ public class MainProgram {
     private void processOptions(String args[]) throws Exception {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
+
+
+        if(cmd.hasOption(ALGORITHM) && cmd.getOptionValue(ALGORITHM).equals(Algorithm.LNS.name())) {
+            monoObjectiveExecution(cmd);
+        }
+        else {
+            multiObjectiveExecution(cmd);
+        }
+    }
+
+    private void monoObjectiveExecution(CommandLine cmd) throws Exception {
+        List<File> instances = listMDGFiles(cmd).stream().map(f -> new File(f)).collect(Collectors.toList());
+        LNS algorithm = new LNS();
+
+        int repetitions = cmd.hasOption("repetitions")
+                ? Integer.parseInt(cmd.getOptionValue("repetitions"))
+                : 1;
+
+        algorithm.execute(instances, repetitions);
+    }
+
+    private void multiObjectiveExecution(CommandLine cmd) throws Exception {
         Vector<Project> instances = loadProjects(listMDGFiles(cmd));
 
         int repetitions = cmd.hasOption("repetitions")
                 ? Integer.parseInt(cmd.getOptionValue("repetitions"))
-                : 1;  // changing the default number of repetitions to 1. 
+                : 1;
 
         ClusteringProblemBuilder builder = new ClusteringProblemBuilder(cmd.getOptionValue(ALGORITHM));
         Experiment<CouplingProblem, Project> experiment = new Experiment<>();
