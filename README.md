@@ -15,6 +15,7 @@ in a [different repository](https://github.com/project-draco/cms)
 ### Build and Install
 
    * Build and install the [maven library version](https://github.com/project-draco/cms) of the HeuristicDesign.
+   * Build and install the [maven library version](https://github.com/project-draco/cms_mono_objective) of the HeuristicDesign MonoObjective version.
    * Execute the following command
 
 ```console
@@ -55,3 +56,4 @@ java -jar ./target/cms_runner-1.0-SNAPSHOT-jar-with-dependencies.jar
      --output out.txt
      --repetitions 20
 ```
+
