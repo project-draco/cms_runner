@@ -57,7 +57,7 @@ public class MainProgram {
 
         int repetitions = cmd.hasOption("repetitions")
                 ? Integer.parseInt(cmd.getOptionValue("repetitions"))
-                : 20;
+                : 1;  // changing the default number of repetitions to 1. 
 
         ClusteringProblemBuilder builder = new ClusteringProblemBuilder(cmd.getOptionValue(ALGORITHM));
         Experiment<CouplingProblem, Project> experiment = new Experiment<>();
