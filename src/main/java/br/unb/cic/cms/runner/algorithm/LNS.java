@@ -122,6 +122,8 @@ public class LNS {
 
     private void saveSearchStatus(ResultWriter out, ModuleDependencyGraph mdg, LargeNeighborhoodSearch lns, int configN, int executionN, Object currentValue){
         ClusterMetrics cm = lns.getBestSolutionFound();
-        out.writeLine("MQ: " + cm.calculateMQ(), "Number of Clusters: " + cm.getTotalClusteres());
+
+        out.writeLine("MQ: " + cm.calculateMQ(), "Number of Clusters: " + cm.getTotalClusteres()
+                , "Number of Modules (MDG): " + mdg.getModuleNames().size(), "Number of Modules (CM): " + cm.getMdg().getModuleNames().size());
     }
 }
