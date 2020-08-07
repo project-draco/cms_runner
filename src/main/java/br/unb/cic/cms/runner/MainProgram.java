@@ -55,8 +55,13 @@ public class MainProgram {
         CommandLineParser parser = new DefaultParser();
         CommandLine cmd = parser.parse(options, args);
 
+        if(!validAlgorithm(cmd)) {
+            System.out.println("Invalid algorithm " + cmd.getOptionValue(ALGORITHM));
+            usageInfo();
+            System.exit(1);
+        }
 
-        if(cmd.hasOption(ALGORITHM) && cmd.getOptionValue(ALGORITHM).equals(Algorithm.LNS.name())) {
+        if(cmd.hasOption(ALGORITHM) && cmd.getOptionValue(ALGORITHM).startsWith("LNS")) {
             monoObjectiveExecution(cmd);
         }
         else {
@@ -66,7 +71,7 @@ public class MainProgram {
 
     private void monoObjectiveExecution(CommandLine cmd) throws Exception {
         List<File> instances = listMDGFiles(cmd).stream().map(f -> new File(f)).collect(Collectors.toList());
-        LNS algorithm = new LNS();
+        LNS algorithm = new LNS(cmd.getOptionValue(ALGORITHM).equals(Algorithm.LNS_COMPACT_MODE.name()));
 
         int repetitions = cmd.hasOption("repetitions")
                 ? Integer.parseInt(cmd.getOptionValue("repetitions"))
@@ -174,5 +179,19 @@ public class MainProgram {
                 .hasArg()
                 .desc("Number of repetitions")
                 .build());
+    }
+
+    private boolean validAlgorithm(CommandLine cmd) {
+        if(cmd.hasOption(ALGORITHM)) {
+            try {
+                String name = cmd.getOptionValue(ALGORITHM);
+                Algorithm alg = Algorithm.valueOf(name);
+                return true;
+            }
+            catch(IllegalArgumentException e) {
+               return false;
+            }
+        }
+        return true; // let's use the default algorithm.
     }
 }

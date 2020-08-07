@@ -23,7 +23,12 @@ import java.util.Map;
 
 public class LNS {
 
-    private static final boolean simplify = true;
+    private boolean simplify;
+
+    public LNS(boolean simplify) {
+        System.out.println(simplify ? "[LNS] Running in the compact mode" : "[LNS] Running in the full mode");
+        this.simplify = simplify;
+    }
 
     private static final int RANDONS_CONFIGS_TO_TEST = 1;//2000//1000;//10000
     private final String PREFIX_NAME;
@@ -60,8 +65,6 @@ public class LNS {
     public void execute(List<File> instances, int repetitions) throws Exception {
         InstanceFileWorker<ModuleDependencyGraph> worker = new BunchInstanceFileWorker();
 
-        System.out.println("INSTANCE;MQ;TEMPO");
-
         for(int i = 0; i < instances.size(); i++) {
             ModuleDependencyGraph mdg = worker.readInstanceFile(instances.get(i));
             runAlgorithm(mdg, repetitions);
@@ -83,6 +86,7 @@ public class LNS {
             System.out.println(mdg.getName());
             if(simplify){
                 MDGSimplifier mDGSimplifier = MDGSimplifier.simplify(mdg);
+                System.out.println("[LNS] Simplifying the MDG");
                 mdg = mDGSimplifier.getMdg();
             }
             for (int configN = 0; configN < RANDONS_CONFIGS_TO_TEST; configN++){

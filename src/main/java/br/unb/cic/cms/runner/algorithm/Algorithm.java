@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.stream.Collectors;
 
 public enum Algorithm {
-    LNS("LNS"),
+    LNS_COMPACT_MODE("LNS_COMPACT_MODE"),
+    LNS_FULL_MODE("LNS_FULL_MODE"),
     RANDOM_SEARCH("RANDOM_SEARCH"),
     NSGAII("NSGAII");
 
