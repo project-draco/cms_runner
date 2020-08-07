@@ -118,8 +118,6 @@ public class LNS {
 
     private void saveSearchStatus(ResultWriter out, ModuleDependencyGraph mdg, LargeNeighborhoodSearch lns, int configN, int executionN, Object currentValue){
         ClusterMetrics cm = lns.getBestSolutionFound();
-        out.writeLine(COMPARE_PARAM.toString(), currentValue.toString(), lns.getConfig().toString(), configN+"", executionN+"",lns.getInitialSolutionCost()+"", lns.getBestCost()+"", lns.getBestSolutionIteration()+"", lns.getBiggestNoImprovementGap()+"", lns.getTimeElapsed()+"", lns.getClusterMetrics().getTotalClusteres()+"",lns.getLastIteration()+""
-                ,cm.getBiggestClusterSize()+"",cm.getSmallestClusterSize()+"",cm.getIsolatedClusterCount()+"",cm.smallestClusterMF()+"",cm.biggestClusterMF()+""
-                ,cm.getSolutionAsString());
+        out.writeLine("MQ: " + cm.calculateMQ(), "Number of Clusters: " + cm.getTotalClusteres());
     }
 }
