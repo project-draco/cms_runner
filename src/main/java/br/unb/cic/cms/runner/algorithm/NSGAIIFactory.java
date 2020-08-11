@@ -22,8 +22,11 @@ public class NSGAIIFactory implements  AlgorithmFactory {
 
         Operator selection = new BinaryTournament();
 
-        int population = 10 * project.getPackageCount();
-        int evaluations = 200 * project.getPackageCount() * population;
+//        int population = 10 * project.getPackageCount();
+//        int evaluations = 200 * project.getPackageCount() * population;
+
+        int population = 2 * project.getClassCount();
+        int evaluations = 50 * project.getClassCount() * population;
 
         NSGAII algorithm = new NSGAII(problem);
         algorithm.setInputParameter("populationSize", population);
