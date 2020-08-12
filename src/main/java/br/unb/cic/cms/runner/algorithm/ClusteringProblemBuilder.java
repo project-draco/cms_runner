@@ -13,7 +13,7 @@ public class ClusteringProblemBuilder  implements ProblemBuilder<CouplingProblem
     public ClusteringProblemBuilder(String algorithm) {
         switch (Algorithm.valueOf(algorithm)) {
             case RANDOM_SEARCH: factory = new RandomSearchFactory(); break;
-            default: factory = new NSGAIIFactory();
+            default: factory = new NSGAIIFactory(2, 10);
         }
     }
 

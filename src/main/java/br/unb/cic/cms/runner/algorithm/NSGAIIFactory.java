@@ -11,6 +11,17 @@ import jmetal.metaheuristics.nsgaII.NSGAII;
 
 public class NSGAIIFactory implements  AlgorithmFactory {
 
+    private int populationFactor = 2;
+    private int evaluationsFactor = 50;
+
+    public NSGAIIFactory() {
+        this(2, 50);
+    }
+    public NSGAIIFactory(int populationFactor, int evaluationsFactor) {
+        System.out.println("NSGA-II Running in the " + populationFactor + " x " + evaluationsFactor);
+        this.populationFactor = populationFactor;
+        this.evaluationsFactor = evaluationsFactor;
+    }
     @Override
     public Algorithm instance(Project project) throws Exception {
         CouplingProblem problem = new CouplingProblem(project);
@@ -26,8 +37,8 @@ public class NSGAIIFactory implements  AlgorithmFactory {
 //        int population = 10 * project.getPackageCount();
 //        int evaluations = 200 * project.getPackageCount() * population;
 
-        int population = 2 * project.getClassCount();
-        int evaluations = 10 * project.getClassCount() * population;
+        int population = populationFactor * project.getClassCount();
+        int evaluations = evaluationsFactor * project.getClassCount() * population;
 
         NSGAII algorithm = new NSGAII(problem);
         algorithm.setInputParameter("populationSize", population);
