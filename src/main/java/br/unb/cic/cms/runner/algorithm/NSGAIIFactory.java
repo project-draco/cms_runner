@@ -10,6 +10,7 @@ import jmetal.base.operator.selection.BinaryTournament;
 import jmetal.metaheuristics.nsgaII.NSGAII;
 
 public class NSGAIIFactory implements  AlgorithmFactory {
+
     @Override
     public Algorithm instance(Project project) throws Exception {
         CouplingProblem problem = new CouplingProblem(project);
@@ -26,7 +27,7 @@ public class NSGAIIFactory implements  AlgorithmFactory {
 //        int evaluations = 200 * project.getPackageCount() * population;
 
         int population = 2 * project.getClassCount();
-        int evaluations = 5 * project.getClassCount() * population;
+        int evaluations = 50 * project.getClassCount() * population;
 
         NSGAII algorithm = new NSGAII(problem);
         algorithm.setInputParameter("populationSize", population);
