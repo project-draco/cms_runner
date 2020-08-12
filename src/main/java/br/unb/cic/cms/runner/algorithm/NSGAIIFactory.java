@@ -26,7 +26,7 @@ public class NSGAIIFactory implements  AlgorithmFactory {
 //        int evaluations = 200 * project.getPackageCount() * population;
 
         int population = 2 * project.getClassCount();
-        int evaluations = 50 * project.getClassCount() * population;
+        int evaluations = 5 * project.getClassCount() * population;
 
         NSGAII algorithm = new NSGAII(problem);
         algorithm.setInputParameter("populationSize", population);
