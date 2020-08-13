@@ -24,6 +24,8 @@ public class MainProgram {
     public static final String INPUT_DIR = "input-dir";
     public static final String OUTPUT = "output";
     public static final String REPETITIONS = "repetitions";
+    public static final String EVALUATIONS_FACTOR = "evaluationsFactor";
+    public static final String POPULATION_FACTOR = "populationFactor";
     private Options options;
 
     public static void main(String args[]) {
@@ -87,7 +89,15 @@ public class MainProgram {
                 ? Integer.parseInt(cmd.getOptionValue("repetitions"))
                 : 1;
 
-        ClusteringProblemBuilder builder = new ClusteringProblemBuilder(cmd.getOptionValue(ALGORITHM));
+        int populations = cmd.hasOption(POPULATION_FACTOR)
+                ? Integer.parseInt(cmd.getOptionValue(POPULATION_FACTOR))
+                : 10;
+
+        int evolutions = cmd.hasOption(EVALUATIONS_FACTOR)
+                ? Integer.parseInt(cmd.getOptionValue(EVALUATIONS_FACTOR))
+                : 200;
+
+        ClusteringProblemBuilder builder = new ClusteringProblemBuilder(cmd.getOptionValue(ALGORITHM), populations, evolutions);
         Experiment<CouplingProblem, Project> experiment = new Experiment<>();
         experiment.runCycles(cmd.getOptionValue(OUTPUT), builder, instances, repetitions);
     }
@@ -178,6 +188,20 @@ public class MainProgram {
                 .required()
                 .hasArg()
                 .desc("Number of repetitions")
+                .build());
+
+        options.addOption(Option.builder()
+                .longOpt(POPULATION_FACTOR)
+                .argName(POPULATION_FACTOR)
+                .hasArg()
+                .desc("Number of populations")
+                .build());
+
+        options.addOption(Option.builder()
+                .longOpt(EVALUATIONS_FACTOR)
+                .argName(EVALUATIONS_FACTOR)
+                .hasArg()
+                .desc("Number of evolutions")
                 .build());
     }
 

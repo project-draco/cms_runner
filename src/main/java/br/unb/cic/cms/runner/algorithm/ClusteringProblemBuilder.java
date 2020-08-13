@@ -10,10 +10,10 @@ import br.unirio.lns.hdesign.multiobjective.ProblemBuilder;
  */
 public class ClusteringProblemBuilder  implements ProblemBuilder<CouplingProblem, Project> {
     AlgorithmFactory factory;
-    public ClusteringProblemBuilder(String algorithm) {
+    public ClusteringProblemBuilder(String algorithm, int populationFactor, int evaluationsFactor) {
         switch (Algorithm.valueOf(algorithm)) {
             case RANDOM_SEARCH: factory = new RandomSearchFactory(); break;
-            default: factory = new NSGAIIFactory(1, 20);
+            default: factory = new NSGAIIFactory(populationFactor, evaluationsFactor);
         }
     }
 
